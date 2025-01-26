@@ -38,15 +38,23 @@ Data<- read_xlsx("Data.xlsx")
 
 ```{r}
 facet_histogram <- ggplot(Data, aes(x = Angka_Harapan_Hidup, fill = Benua)) +
-  geom_histogram(binwidth = 5, color = "black", alpha = 0.7) +
+#memasukkan data ke x yaitu angka harapan hidup
+#fill = benua : pemberian warna ke masing-masing benua
+  geom_histogram(binwidth = 5, color = "black", alpha = 0.7) + 
+#binwidth = 5: Lebar tiap bin (kelompok) adalah 5
+#fill = "skyblue": Warna isi histogram.
+#color = "black": Warna garis tepi histogram.
+#alpha = 0.7: Transparansi warna histogram.
   labs(
-    title = "Distribusi Angka Harapan Hidup dengan Facet per Benua",
-    x = "Angka Harapan Hidup",
-    y = "Frekuensi"
+    title = "Distribusi Angka Harapan Hidup dengan Facet per Benua",#Judul
+    x = "Angka Harapan Hidup",#nama sumbu x
+    y = "Frekuensi" #nama sumbu y
   )+
-  theme_minimal() +
-  facet_wrap(~ Benua) +
+  theme_minimal() + #Tema minimalis untuk tampilan yang bersih.
+  facet_wrap(~ Benua) + #membuat grafik tepisah
   theme(plot.title = element_text(hjust = 0.5, size = 16))
+#hjust = 0.5 mengatur judul grafik agar terpusat secara horizontal
+#size = 16 mengubah ukuran font judul
 
 # Tampilkan histogram dengan facet
 facet_histogram
@@ -58,13 +66,26 @@ facet_histogram
 ```{r}
 # Scatter plot sederhana
 scatter_plot_simple <- ggplot(Data, aes(x = Pendapatan_per_kapita, y = Angka_Harapan_Hidup, color = Benua)) +
+#memasukkan data ke x yaitu pendapatan per kapita
+#memasukkan data ke y yaitu angka harapan hidup
+#color = benua : pemberian warna ke masing-masing benua
+
   geom_point(size = 2, alpha = 0.7) +
-  ggtitle("Pendapatan per Kapita vs Angka Harapan Hidup") +
-  xlab("Pendapatan per Kapita") +
-  ylab("Angka Harapan Hidup") +
-  theme_minimal() +
+#size = 2 : ukuran point/titik menjadi 2
+#alpha = 0.7 mengatur tingkat transparansi titik-titik tersebut.
+  labs(
+    title = "Pendapatan per Kapita vs Angka Harapan Hidup", #judul
+    x = "Pendapatan per Kapita", #nama sumbu x
+    y = "Angka Harapan Hidup" #nama sumbub y
+  )+
+  theme_minimal() + #Tema minimalis untuk tampilan yang bersih
   theme(plot.title = element_text(hjust = 0.5, size = 16)) +
+#theme() mengatur elemen-elemen tema lebih lanjut
+#hjust = 0.5 memastikan judul grafik terpusat secara horizontal
+#size = 16 mengatur ukuran font judul grafik
   scale_x_continuous(labels = scales::comma)
+#scale_x_continuous() digunakan untuk mengatur format label pada sumbu X
+#scales::comma digunakan untuk format angka dengan pemisah ribuan
 
 # Tampilkan scatter plot
 scatter_plot_simple
@@ -76,17 +97,34 @@ scatter_plot_simple
 ```{r}
 # Hitung total Populasi per Tahun dan Benua
 data_heatmap2 <- aggregate(Populasi ~ Tahun + Benua, Data, sum)
+#aggregate()untuk menghitung total Populasi per kombinasi Tahun dan Benua
+#data_heatmap2 untuk menyimpan hasil aggregate
+#sum digunakan untuk menjumlahkan nilai populasi berdasarkan kombinasi kategori tahun dan benua
 
 # Heatmap Populasi
 heatmap2 <- ggplot(data_heatmap2, aes(x = Tahun, y = Benua, fill = Populasi)) +
+#ggplot() digunakan untuk memulai pembuatan heatmap
+#memasukkan data ke x yaitu tahun
+#memasukkan data ke y yaitu benua
+#fill = populasi pengisian warna berdasarkan populasi
+  
   geom_tile(color = "white") +
-  scale_fill_gradient(low = "lightyellow", high = "red") +  # Gradien warna
-  ggtitle("Total Populasi per Tahun dan Benua") +
-  xlab("Tahun") +
-  ylab("Benua") +
-  theme_minimal() +
+#geom_tile() menggambarkan kotak-kotak yang membentuk heatmap
+#color = "white" memberi warna ptih untuk batas pada kotak-kotak tersebut
+
+  labs(
+    title = "Total Populasi per Tahun dan Benua", #judul
+    x = "Tahun", #nama sumbu x
+    y = "Benua" #nama sumbu y
+  )+
+  theme_minimal() + #Tema minimalis untuk tampilan yang bersih.
   theme(plot.title = element_text(hjust = 0.5, size = 16)) +
+#theme() mengatur elemen-elemen tema lebih lanjut
+#hjust = 0.5 memastikan judul grafik terpusat secara horizontal
+#size = 16 mengatur ukuran font judul grafik
   scale_fill_continuous(labels = scales::comma)  # Format angka pada legenda
+#scale_x_continuous() digunakan untuk mengatur format label pada sumbu X
+#scales::comma digunakan untuk format angka dengan pemisah ribuan
 
 # Tampilkan heatmap
 heatmap2
@@ -102,17 +140,25 @@ library(gganimate)
 
 # Hitung rata-rata Angka Harapan Hidup per Benua berdasarkan Tahun
 Data_avg <- aggregate(Angka_Harapan_Hidup ~ Benua + Tahun, Data, mean)
+#aggregate() digunakan untuk menghitung rata-rata angka harapan hidup per kombinasi benua dan tahun
+#Data_avg untuk menyimpan hasil aggregate
+#mean digunakan untuk menghitung rata-rata berdasarkan data tersebut
 
 # Membuat bar chart animasi
 animasi_bar <- ggplot(Data_avg, aes(x = Benua, y = Angka_Harapan_Hidup, fill = Benua)) +
+#ggplot() dimulai untuk membuat grafik
+#memasukkan data ke x yaitu benua
+#memasukkan data ke y yaitu angka harapan hidup
+#fill = benua pengisian warna berdasarkan benua
+  
   geom_bar(stat = "identity") +  # Menggunakan bar chart
   labs(
-    title = "Rata-rata Angka Harapan Hidup per Benua ({frame_time})",
-    x = "Benua",
-    y = "Rata-rata Angka Harapan Hidup"
+    title = "Rata-rata Angka Harapan Hidup per Benua ({frame_time})", #judul
+    x = "Benua", #nama sumbu x
+    y = "Rata-rata Angka Harapan Hidup" #nama sumbu y
   )+
-  theme_minimal() +
-   ylim(0, 100) + 
+  theme_minimal() + #Tema minimalis untuk tampilan yang bersih.
+   ylim(0, 100) + #ylim() mengatur batas vertikal sumbu Y tidak melebihi batas 100 
   transition_time(Tahun) +  # Animasi berdasarkan Tahun
   ease_aes('linear')  # Transisi animasi yang halus
 
