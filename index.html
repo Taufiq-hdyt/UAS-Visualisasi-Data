@@ -2790,16 +2790,19 @@ library(gganimate)</code></pre>
 <pre class="r"><code>facet_histogram &lt;- ggplot(Data, aes(x = Angka_Harapan_Hidup, fill = Benua)) +
 #memasukkan data ke x yaitu angka harapan hidup
 #fill = benua : pemberian warna ke masing-masing benua
+  
   geom_histogram(binwidth = 5, color = &quot;black&quot;, alpha = 0.7) + 
 #binwidth = 5: Lebar tiap bin (kelompok) adalah 5
 #fill = &quot;skyblue&quot;: Warna isi histogram.
 #color = &quot;black&quot;: Warna garis tepi histogram.
 #alpha = 0.7: Transparansi warna histogram.
+  
   labs(
     title = &quot;Distribusi Angka Harapan Hidup dengan Facet per Benua&quot;,#Judul
     x = &quot;Angka Harapan Hidup&quot;,#nama sumbu x
     y = &quot;Frekuensi&quot; #nama sumbu y
   )+
+  
   theme_minimal() + #Tema minimalis untuk tampilan yang bersih.
   facet_wrap(~ Benua) + #membuat grafik tepisah
   theme(plot.title = element_text(hjust = 0.5, size = 16))
@@ -2820,17 +2823,20 @@ scatter_plot_simple &lt;- ggplot(Data, aes(x = Pendapatan_per_kapita, y = Angka_
 
   geom_point(size = 2, alpha = 0.7) +
 #size = 2 : ukuran point/titik menjadi 2
-#alpha = 0.7 mengatur tingkat transparansi titik-titik tersebut.
+#alpha = 0.7 mengatur tingkat transparansi titik-titik tersebut
+  
   labs(
     title = &quot;Pendapatan per Kapita vs Angka Harapan Hidup&quot;, #judul
     x = &quot;Pendapatan per Kapita&quot;, #nama sumbu x
     y = &quot;Angka Harapan Hidup&quot; #nama sumbub y
   )+
+  
   theme_minimal() + #Tema minimalis untuk tampilan yang bersih
   theme(plot.title = element_text(hjust = 0.5, size = 16)) +
 #theme() mengatur elemen-elemen tema lebih lanjut
 #hjust = 0.5 memastikan judul grafik terpusat secara horizontal
 #size = 16 mengatur ukuran font judul grafik
+  
   scale_x_continuous(labels = scales::comma)
 #scale_x_continuous() digunakan untuk mengatur format label pada sumbu X
 #scales::comma digunakan untuk format angka dengan pemisah ribuan
@@ -2863,11 +2869,13 @@ heatmap2 &lt;- ggplot(data_heatmap2, aes(x = Tahun, y = Benua, fill = Populasi))
     x = &quot;Tahun&quot;, #nama sumbu x
     y = &quot;Benua&quot; #nama sumbu y
   )+
+  
   theme_minimal() + #Tema minimalis untuk tampilan yang bersih.
   theme(plot.title = element_text(hjust = 0.5, size = 16)) +
 #theme() mengatur elemen-elemen tema lebih lanjut
 #hjust = 0.5 memastikan judul grafik terpusat secara horizontal
 #size = 16 mengatur ukuran font judul grafik
+  
   scale_fill_continuous(labels = scales::comma)  # Format angka pada legenda
 #scale_x_continuous() digunakan untuk mengatur format label pada sumbu X
 #scales::comma digunakan untuk format angka dengan pemisah ribuan
@@ -2900,6 +2908,7 @@ animasi_bar &lt;- ggplot(Data_avg, aes(x = Benua, y = Angka_Harapan_Hidup, fill 
     x = &quot;Benua&quot;, #nama sumbu x
     y = &quot;Rata-rata Angka Harapan Hidup&quot; #nama sumbu y
   )+
+  
   theme_minimal() + #Tema minimalis untuk tampilan yang bersih.
    ylim(0, 100) + #ylim() mengatur batas vertikal sumbu Y tidak melebihi batas 100 
   transition_time(Tahun) +  # Animasi berdasarkan Tahun
