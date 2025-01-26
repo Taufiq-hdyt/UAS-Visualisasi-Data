@@ -1,10 +1,10 @@
 ---
 title: "UAS Visualisasi Dataa"
-author: "Muhammad Taufiq Hidayat-Institut Teknologi Statistika dan Bisnis Muhammadiyah"
+author: "Muhammad Taufiq Hidayat-A3202300042"
 date: "`r Sys.Date()`"
 output: 
   html_document:
-    css : style.css
+    css: style.css
     theme: flatly
     higlight: zenburn
     toc: true
@@ -24,5 +24,127 @@ text-align: justify}
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
-# Ini ujian broo
-bla bla blaa
+
+
+```{r}
+library(readr)
+library(readxl)
+library(gganimate)
+Data<- read_xlsx("Data.xlsx")
+```
+
+# 1.Grafik Univariat (Histogram)
+
+
+```{r}
+facet_histogram <- ggplot(Data, aes(x = Angka_Harapan_Hidup, fill = Benua)) +
+  geom_histogram(binwidth = 5, color = "black", alpha = 0.7) +
+  labs(
+    title = "Distribusi Angka Harapan Hidup dengan Facet per Benua",
+    x = "Angka Harapan Hidup",
+    y = "Frekuensi"
+  )+
+  theme_minimal() +
+  facet_wrap(~ Benua) +
+  theme(plot.title = element_text(hjust = 0.5, size = 16))
+
+# Tampilkan histogram dengan facet
+facet_histogram
+
+```
+
+# 2. Grafik Bivariat (Scatter plot)
+
+```{r}
+# Scatter plot sederhana
+scatter_plot_simple <- ggplot(Data, aes(x = Pendapatan_per_kapita, y = Angka_Harapan_Hidup, color = Benua)) +
+  geom_point(size = 2, alpha = 0.7,shape = 8) +
+  ggtitle("Pendapatan per Kapita vs Angka Harapan Hidup") +
+  xlab("Pendapatan per Kapita") +
+  ylab("Angka Harapan Hidup") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, size = 16)) +
+  scale_x_continuous(labels = scales::comma)
+
+# Tampilkan scatter plot
+scatter_plot_simple
+
+```
+
+# 3. Grafik Multivariat (Heatmap)
+
+```{r}
+# Hitung total Populasi per Tahun dan Benua
+data_heatmap2 <- aggregate(Populasi ~ Tahun + Benua, Data, sum)
+
+# Heatmap Populasi
+heatmap2 <- ggplot(data_heatmap2, aes(x = Tahun, y = Benua, fill = Populasi)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient(low = "lightyellow", high = "red") +  # Gradien warna
+  ggtitle("Total Populasi per Tahun dan Benua") +
+  xlab("Tahun") +
+  ylab("Benua") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5, size = 16)) +
+  scale_fill_continuous(labels = scales::comma)  # Format angka pada legenda
+
+# Tampilkan heatmap
+heatmap2
+
+```
+
+
+# 4. Grafik Interaktif (Bar Chart)
+
+```{r}
+library(ggplot2)
+library(gganimate)
+
+# Hitung rata-rata Angka Harapan Hidup per Benua berdasarkan Tahun
+Data_avg <- aggregate(Angka_Harapan_Hidup ~ Benua + Tahun, Data, mean)
+
+# Membuat bar chart animasi
+animasi_bar <- ggplot(Data_avg, aes(x = Benua, y = Angka_Harapan_Hidup, fill = Benua)) +
+  geom_bar(stat = "identity") +  # Menggunakan bar chart
+  labs(
+    title = "Rata-rata Angka Harapan Hidup per Benua ({frame_time})",
+    x = "Benua",
+    y = "Rata-rata Angka Harapan Hidup"
+  )+
+  theme_minimal() +
+   ylim(0, 100) + 
+  transition_time(Tahun) +  # Animasi berdasarkan Tahun
+  ease_aes('linear')  # Transisi animasi yang halus
+
+# Tampilkan grafik animasi
+animasi_bar
+```
+
+Penjelasan Kode :
+
+1.aggregate():
+Digunakan untuk menghitung rata-rata Angka Harapan Hidup per Benua untuk setiap Tahun.
+
+2.aes():
+x = Benua: Sumbu X berisi nama benua.
+y = Angka_Harapan_Hidup: Tinggi bar menunjukkan rata-rata angka harapan hidup.
+fill = Benua: Warna bar berdasarkan benua.
+
+3.geom_bar(stat = "identity"):
+Membuat bar chart dengan tinggi bar berdasarkan nilai numerik langsung.
+
+4.transition_time(Tahun):
+Menambahkan animasi berdasarkan kolom Tahun.
+
+5.title("{frame_time}"):
+Menampilkan informasi Tahun di judul untuk setiap frame animasi.
+
+6.ease_aes('linear'):
+Membuat transisi antar frame animasi lebih mulus.
+
+7.ylim(0, 100):
+Membatasi rentang sumbu y dari 0 hingga 100.
+
+
+
+
