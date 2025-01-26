@@ -58,7 +58,7 @@ facet_histogram
 ```{r}
 # Scatter plot sederhana
 scatter_plot_simple <- ggplot(Data, aes(x = Pendapatan_per_kapita, y = Angka_Harapan_Hidup, color = Benua)) +
-  geom_point(size = 2, alpha = 0.7,shape = 8) +
+  geom_point(size = 2, alpha = 0.7) +
   ggtitle("Pendapatan per Kapita vs Angka Harapan Hidup") +
   xlab("Pendapatan per Kapita") +
   ylab("Angka Harapan Hidup") +
@@ -119,32 +119,3 @@ animasi_bar <- ggplot(Data_avg, aes(x = Benua, y = Angka_Harapan_Hidup, fill = B
 # Tampilkan grafik animasi
 animasi_bar
 ```
-
-Penjelasan Kode :
-
-1.aggregate():
-Digunakan untuk menghitung rata-rata Angka Harapan Hidup per Benua untuk setiap Tahun.
-
-2.aes():
-x = Benua: Sumbu X berisi nama benua.
-y = Angka_Harapan_Hidup: Tinggi bar menunjukkan rata-rata angka harapan hidup.
-fill = Benua: Warna bar berdasarkan benua.
-
-3.geom_bar(stat = "identity"):
-Membuat bar chart dengan tinggi bar berdasarkan nilai numerik langsung.
-
-4.transition_time(Tahun):
-Menambahkan animasi berdasarkan kolom Tahun.
-
-5.title("{frame_time}"):
-Menampilkan informasi Tahun di judul untuk setiap frame animasi.
-
-6.ease_aes('linear'):
-Membuat transisi antar frame animasi lebih mulus.
-
-7.ylim(0, 100):
-Membatasi rentang sumbu y dari 0 hingga 100.
-
-
-
-
