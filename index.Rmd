@@ -212,3 +212,7 @@ animasi_bar <- ggplot(Data_avg, aes(x = Benua, y = Angka_Harapan_Hidup, fill = B
 # Tampilkan grafik animasi
 animasi_bar
 ```
+
+# Kesimpulan
+- Tujuan: Codingan ini berisi rangkaian visualisasi data, termasuk grafik animasi, scatter plot, heatmap, histogram, dan lainnya, untuk menjelaskan pola hubungan antar variabel (misalnya, pendapatan per kapita, angka harapan hidup, populasi, dll.) dari dataset
+- Visualisasi Interaktif: Seluruh grafik mendukung analisis berbasis tren, membantu mengidentifikasi pola dan anomali dalam data.
