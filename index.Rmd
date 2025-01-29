@@ -136,7 +136,7 @@ scatter_plot_simple
 
 ```
 
-# 3. Grafik Multivariat (Heatmap)
+# 3. Grafik Multivariat Heatmap
 
 ```{r}
 # Hitung total Populasi per Tahun dan Benua
